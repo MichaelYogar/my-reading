@@ -1,4 +1,4 @@
 #!/usr/bin/env node
 
-const helloWorld = require("../cli.js");
-helloWorld();
+const start = require("../cli.js");
+start();
