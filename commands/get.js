@@ -36,7 +36,6 @@ function command(argv) {
  * @param {Object} yargs
  */
 function builder(yargs) {
-  // Define the priority option
   yargs.option("p", {
     alias: "priority",
     describe: "Get links flagged as priority",
@@ -44,7 +43,6 @@ function builder(yargs) {
     default: false,
   });
 
-  // Define the all option
   yargs.option("a", {
     alias: "all",
     describe: "Get all links",
@@ -52,7 +50,6 @@ function builder(yargs) {
     default: false,
   });
 
-  // Define the all option
   yargs.option("r", {
     alias: "recent",
     describe: "Get most recent links",

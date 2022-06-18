@@ -45,13 +45,11 @@ const _generateIdByDate = (date) =>
  * @param {Object} yargs
  */
 const builder = (yargs) => {
-  // Define the link argument
   yargs.positional("link", {
     describe: "The link that you want to store",
     type: "string",
   });
 
-  // Define the priority option
   yargs.option("p", {
     alias: "priority",
     describe: "Set the link you want to store as a priority",

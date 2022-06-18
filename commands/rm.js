@@ -26,13 +26,11 @@ const command = (argv) => {
  * @param {Object} yargs
  */
 const builder = (yargs) => {
-  // Define the link argument
   yargs.positional("id", {
     describe: "The id of the link that you want to remove",
     type: "String",
   });
 
-  // Define the priority option
   yargs.option("a", {
     alias: "all",
     describe: "Remove all links",
