@@ -8,7 +8,7 @@ const { readJSONFile, writeJSONFile } = require("../utility");
 const command = (argv) => {
   let obj = readJSONFile("data");
   obj = _updateJSONObject(obj, argv);
-  writeJSONFile(obj, "data.json");
+  writeJSONFile(obj, "data");
 };
 
 const _updateJSONObject = (obj, argv) => {

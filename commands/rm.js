@@ -22,7 +22,7 @@ const command = (argv) => {
     });
   }
 
-  writeJSONFile(obj, "data.json");
+  writeJSONFile(obj, "data");
 };
 
 /**
