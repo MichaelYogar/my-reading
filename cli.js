@@ -14,7 +14,11 @@ function start() {
     .strict();
 
   // Define commands
-  yargs.command(commands.get).command(commands.rm).command(commands.store);
+  yargs
+    .command(commands.get)
+    .command(commands.rm)
+    .command(commands.store)
+    .command(commands.read);
 
   try {
     // Parse command args
