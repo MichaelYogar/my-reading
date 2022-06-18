@@ -1,5 +1,6 @@
 const { readJSONFile } = require("../utility");
 const Table = require("cli-table");
+const moment = require("moment");
 
 /**
  * The command's main function
@@ -8,7 +9,7 @@ const Table = require("cli-table");
  */
 function command(argv) {
   let output = [];
-  obj = readJSONFile("data");
+  const obj = readJSONFile("data");
   if (argv.p || argv.priority) {
     output = [...obj["priority"]];
   } else if (argv.a || argv.all) {
@@ -18,8 +19,13 @@ function command(argv) {
   }
   const table = new Table({
     style: { head: ["green"] },
-    head: ["Readings", "Created", "Status"],
-    colWidths: [30, 30, 30],
+    head: ["Id", "Readings", "Created", "Status"],
+    colWidths: [30, 30, 30, 30],
+  });
+
+  output = output.map((item) => {
+    item[2] = moment(item[2]).fromNow();
+    return item;
   });
   output.forEach((item) => table.push(item));
   console.log(table.toString());
