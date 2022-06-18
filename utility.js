@@ -62,7 +62,23 @@ const readJSONFile = (filePath) => {
   }
 };
 
+/**
+ * Write data to file
+ * @param {Object} data
+ * @param {String} fileName
+ */
+const writeJSONFile = (data, fileName) => {
+  fs.writeFile(path.join(ROOT_PATH, fileName), JSON.stringify(data), (err) => {
+    if (err) {
+      console.error(err);
+    } else {
+      console.log("Written data");
+    }
+  });
+};
+
 module.exports = {
   readFile,
   readJSONFile,
+  writeJSONFile,
 };
