@@ -1,16 +1,64 @@
+const { readJSONFile, writeJSONFile } = require("../utility");
+
 /**
  * The command's main function
  *
  * @param {Object} argv
  */
-function command(argv) {
-  console.log(argv);
-  let priority = false;
-  if (argv.priority) {
-    priority = true;
+const command = (argv) => {
+  let obj = readJSONFile("data");
+  obj = _updateJSONObject(obj, argv);
+  writeJSONFile(obj, "data.json");
+};
+
+const _updateJSONObject = (obj, argv) => {
+  const currentDate = Date.now();
+  const data = [
+    _generateIdByDate(currentDate),
+    argv.link,
+    currentDate,
+    "UNREAD",
+  ];
+
+  // Update Recent
+  obj["recent"].push(data);
+  while (obj["recent"].length >= 10) {
+    obj["recent"].shift();
   }
-  console.log(priority);
-}
+
+  // Update All
+  obj["all"].push(data);
+
+  // Update priority
+  if (argv.p || argv.priority) {
+    obj["priority"].push(data);
+  }
+
+  return obj;
+};
+
+const _generateIdByDate = (date) =>
+  (date + Math.random()).toString(36).split("").reverse().join("");
+
+/**
+ * Builder function that is run with yargs instance to specify command-specific configuration
+ * @param {Object} yargs
+ */
+const builder = (yargs) => {
+  // Define the link argument
+  yargs.positional("link", {
+    describe: "The link that you want to store",
+    type: "string",
+  });
+
+  // Define the priority option
+  yargs.option("p", {
+    alias: "priority",
+    describe: "Set the link you want to store as a priority",
+    type: "boolean",
+    default: false,
+  });
+};
 
 /**
  * Command usage
@@ -29,3 +77,10 @@ module.exports.describe = "Store URL link";
  * @type {Function}
  */
 module.exports.handler = command;
+
+/**
+ * Builder
+ *
+ * @type {Function}
+ */
+module.exports.builder = builder;
