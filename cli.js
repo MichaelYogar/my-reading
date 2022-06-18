@@ -1,14 +1,23 @@
 const yargs = require("yargs")(process.argv.splice(2));
-const store = require("./commands/store.js");
+const commands = require("./commands");
+
+// Path of cli.js as global constant
+global.ROOT_PATH = __dirname;
+
 function start() {
+  // Yargs initialization
   yargs
     .usage("Usage: $0 <command> [options]")
-    // Add link
-    .fail(handleError);
+    .fail(handleError)
+    .alias({ v: "version", h: "help" })
+    .demandCommand(1, "Please input valid command")
+    .strict();
 
-  yargs.command(store);
+  // Define commands
+  yargs.command(commands.get).command(commands.rm).command(commands.store);
 
   try {
+    // Parse command args
     yargs.parse();
   } catch (err) {
     handleError(err);
