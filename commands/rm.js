@@ -14,7 +14,7 @@ const command = (argv) => {
     });
   } else {
     Object.entries(obj).forEach(([key, value]) => {
-      obj[key] = value.filter((item) => item[0] !== id);
+      obj[key] = value.filter((item) => item["id"] !== id);
     });
   }
 

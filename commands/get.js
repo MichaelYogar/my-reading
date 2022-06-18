@@ -8,8 +8,10 @@ const moment = require("moment");
  * @param {Object} argv
  */
 function command(argv) {
-  let output = [];
   const obj = readJSONFile("data");
+
+  // Create output data
+  let output = [];
   if (argv.p || argv.priority) {
     output = [...obj["priority"]];
   } else if (argv.a || argv.all) {
@@ -17,6 +19,8 @@ function command(argv) {
   } else {
     output = [...obj["recent"].slice(0, argv.r)];
   }
+
+  // Display output data
   const table = new Table({
     style: { head: ["green"] },
     head: ["Id", "Readings", "Created", "Status"],
@@ -24,10 +28,10 @@ function command(argv) {
   });
 
   output = output.map((item) => {
-    item[2] = moment(item[2]).fromNow();
+    item["created"] = moment(item["created"]).fromNow();
     return item;
   });
-  output.forEach((item) => table.push(item));
+  output.forEach((item) => table.push(Object.values(item)));
   console.log(table.toString());
 }
 
@@ -52,7 +56,7 @@ function builder(yargs) {
 
   yargs.option("r", {
     alias: "recent",
-    describe: "Get most recent links",
+    describe: "Get most recent links MAX=10",
     type: "number",
     default: 3,
   });

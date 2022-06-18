@@ -13,12 +13,12 @@ const command = (argv) => {
 
 const _updateJSONObject = (obj, argv) => {
   const currentDate = Date.now();
-  const data = [
-    _generateIdByDate(currentDate),
-    argv.link,
-    currentDate,
-    "UNREAD",
-  ];
+  const data = {
+    id: _generateIdByDate(currentDate),
+    link: argv.link,
+    created: currentDate,
+    status: "UNREAD",
+  };
 
   // Update Recent
   obj["recent"].push(data);
