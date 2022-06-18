@@ -1,5 +1,8 @@
 const path = require("node:path");
 const fs = require("fs");
+const os = require("os");
+const XDG_DATA_HOME = "/.local/share";
+const HOME_DIR = os.homedir();
 
 /**
  * Check if file path provided is valid
@@ -31,20 +34,19 @@ const _resolveFilePath = (filePath, ext) => {
   return resolvedPath;
 };
 
-const readFile = (filePath, ext) => {
-  filePath = _resolveFilePath(filePath, ext);
+const readFile = (fileName, ext) => {
+  const dataPath = path.join(HOME_DIR, XDG_DATA_HOME, "/myreading", fileName);
+  const file = _resolveFilePath(dataPath, ext);
 
-  if (!_isValidFile(filePath)) {
-    throw new Error(`${filePath} does not exist!`);
+  if (!_isValidFile(file)) {
+    throw new Error(`${file} does not exist!`);
   }
 
   try {
-    return fs.readFileSync(filePath);
+    return fs.readFileSync(file);
   } catch (error) {
     throw new Error(error);
   }
-
-  return content;
 };
 
 /**
@@ -68,13 +70,17 @@ const readJSONFile = (filePath) => {
  * @param {String} fileName
  */
 const writeJSONFile = (data, fileName) => {
-  fs.writeFile(path.join(ROOT_PATH, fileName), JSON.stringify(data), (err) => {
-    if (err) {
-      console.error(err);
-    } else {
-      console.log("Written data");
+  fs.writeFile(
+    path.join(HOME_DIR, XDG_DATA_HOME, "/myreading", fileName + ".json"),
+    JSON.stringify(data),
+    (err) => {
+      if (err) {
+        console.error(err);
+      } else {
+        console.log("Written data");
+      }
     }
-  });
+  );
 };
 
 module.exports = {
