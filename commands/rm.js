@@ -6,11 +6,15 @@ const { readJSONFile, writeJSONFile } = require("../utility");
  * @param {Object} argv
  */
 const command = (argv) => {
-  const { id, all } = argv;
+  const { id, all, read } = argv;
   let obj = readJSONFile("data");
   if (all) {
     Object.keys(obj).forEach((key) => {
       obj[key] = [];
+    });
+  } else if (read) {
+    Object.entries(obj).forEach(([key, value]) => {
+      obj[key] = value.filter((item) => item["status"] !== "READ");
     });
   } else {
     Object.entries(obj).forEach(([key, value]) => {
@@ -34,6 +38,13 @@ const builder = (yargs) => {
   yargs.option("a", {
     alias: "all",
     describe: "Remove all links",
+    type: "boolean",
+    default: false,
+  });
+
+  yargs.option("r", {
+    alias: "read",
+    describe: "Remove all links that are marked as READ",
     type: "boolean",
     default: false,
   });
