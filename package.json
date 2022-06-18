@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/MichaelYogar/my-reading#readme",
   "dependencies": {
+    "cli-table": "^0.3.11",
     "yargs": "^17.5.1"
   }
 }
