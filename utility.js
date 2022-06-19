@@ -1,8 +1,6 @@
 const path = require("node:path");
 const fs = require("fs");
 const os = require("os");
-const XDG_DATA_HOME = "/.local/share";
-const HOME_DIR = os.homedir();
 
 /**
  * Check if file path provided is valid
@@ -35,7 +33,7 @@ const _resolveFilePath = (filePath, ext) => {
 };
 
 const readFile = (fileName, ext) => {
-  const dataPath = path.join(HOME_DIR, XDG_DATA_HOME, "/myreading", fileName);
+  const dataPath = path.join(getHomeDirectory(), fileName);
   const file = _resolveFilePath(dataPath, ext);
 
   if (!_isValidFile(file)) {
@@ -71,7 +69,7 @@ const readJSONFile = (filePath) => {
  */
 const writeJSONFile = (data, fileName) => {
   fs.writeFile(
-    path.join(HOME_DIR, XDG_DATA_HOME, "/myreading", fileName + ".json"),
+    path.join(getHomeDirectory(), fileName + ".json"),
     JSON.stringify(data),
     (err) => {
       if (err) {
@@ -83,8 +81,19 @@ const writeJSONFile = (data, fileName) => {
   );
 };
 
+/**
+ * Get path for Home directory
+ * Supports Linux and MacOS
+ * @returns {String}
+ */
+const getHomeDirectory = () => {
+  const XDG_DATA_HOME = "/.local/share";
+  return path.join(os.homedir(), XDG_DATA_HOME, "/myreading");
+};
+
 module.exports = {
   readFile,
   readJSONFile,
   writeJSONFile,
+  getHomeDirectory,
 };
