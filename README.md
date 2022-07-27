@@ -2,6 +2,14 @@
 
 > Manage your reading list through the a convenient CLI tool.
 
+## Installation
+
+You need to install [Node.js](https://nodejs.org/en/download/). Then install the following globally:
+
+```
+npm install -g myreading
+```
+
 ## Get
 
 > Get URL link(s)
