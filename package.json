@@ -1,6 +1,6 @@
 {
   "name": "myreading",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Manage your reading list through the a convenient CLI tool",
   "main": "bin/cli.js",
   "bin": {
@@ -24,5 +24,8 @@
     "cli-table": "^0.3.11",
     "moment": "^2.29.3",
     "yargs": "^17.5.1"
-  }
+  },
+  "os": [
+    "!win32"
+  ]
 }
